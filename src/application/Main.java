@@ -88,6 +88,47 @@ public class Main extends Application {
 				barra.setPrefSize(570, 300);
 				barra.visibleProperty();
 				
+				//space for users
+				AnchorPane vistaBorder = new AnchorPane();
+				ScrollPane scroolpane = new ScrollPane();
+
+				VBox verticalIz = new VBox (100);
+				
+				ScrollPane spaceuser = new ScrollPane();
+				Button btn1 = new Button("Boton1 jajsjlsansaldncns");
+				Button btn2 = new Button("Boton2");
+				Button btn3 = new Button("Boton3");
+				Button btn4 = new Button("Boton4");
+				Button btn5 = new Button("Boton5");
+				
+				
+				
+				  
+
+				verticalIz.getChildren().addAll(btn1,btn2,btn3,btn4,btn5);
+				
+				spaceuser.setContent(verticalIz);
+				spaceuser.setPrefSize(300, 700);
+				spaceuser.visibleProperty();
+				spaceuser.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+				
+				
+				AnchorPane.setRightAnchor(spaceuser, 1280.10);
+				AnchorPane.setLeftAnchor(spaceuser, 10.10);
+				AnchorPane.setTopAnchor(spaceuser, 30.10);
+				AnchorPane.setBottomAnchor(spaceuser, 30.10);
+			
+				AnchorPane panel = new AnchorPane();
+				AnchorPane.setBottomAnchor(chatbox, 10d);
+				AnchorPane.setRightAnchor(chatbox, 5d);
+				AnchorPane.setTopAnchor(spacechat, 60d);
+				AnchorPane.setBottomAnchor(spacechat, 60d);
+				
+				AnchorPane.setRightAnchor(spacechat, 5d);
+				
+
+
+				
 				AnchorPane panel = new AnchorPane();
 				AnchorPane.setBottomAnchor(chatbox, 10d);
 				AnchorPane.setRightAnchor(chatbox, 5d);
@@ -95,7 +136,11 @@ public class Main extends Application {
 				AnchorPane.setBottomAnchor(barra, 60d);
 				AnchorPane.setRightAnchor(barra, 5d);
 				
-				panel.getChildren().addAll(chatbox, barra);
+				
+				vistaBorder.getChildren().addAll(spaceuser);
+				//
+				
+				panel.getChildren().addAll(chatbox, barra, vistaBorder);
 				
 				Stage escenario2 = new Stage();
 				Scene escena2 = new Scene(panel, 900, 600);

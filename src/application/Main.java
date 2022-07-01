@@ -3,6 +3,7 @@ package application;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -11,14 +12,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 //import javafx.scene.image.Image;
 //import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 
 
 public class Main extends Application {
@@ -29,7 +34,7 @@ public class Main extends Application {
 		TextField user = new TextField("Usuario");
 		TextField clave = new TextField("Contraseña");
 		Button login = new Button("Iniciar sesión");
-		Label titulo = new Label("My Qtt Chat");
+		Label titulo = new Label("");
 		
 		user.setFont(Font.font("Comic Sans Ms", FontWeight.LIGHT, 14));
 		user.setFocusTraversable(false);
@@ -43,7 +48,7 @@ public class Main extends Application {
 		login.setMinHeight(30);
 		
 		titulo.setFont(Font.font("Comic Sans Ms", FontWeight.EXTRA_BOLD, 18));
-		titulo.setStyle("-fx-text-fill: orange");
+		titulo.setStyle("-fx-text-fill: blue");
 		
 		user.setOnMousePressed(new EventHandler<MouseEvent>() {
 
@@ -72,10 +77,7 @@ public class Main extends Application {
 				escenario.close();
 				TextField chat = new TextField();
 				Button enviar = new Button("Enviar");
-				
-				HBox chatbox = new HBox(10);
-				chatbox.getChildren().addAll(chat, enviar);
-				chatbox.setAlignment(Pos.CENTER);
+				Label globo_msg = new Label();
 				
 				chat.setFont(Font.font("Comic Sans Ms", FontWeight.NORMAL, 14));
 				chat.setMinSize(500, 10);
@@ -83,71 +85,102 @@ public class Main extends Application {
 				enviar.setFont(Font.font("Comic Sans Ms", FontWeight.BOLD, 14));
 				enviar.setMinSize(20, 10);
 				
-				ScrollPane barra = new ScrollPane();
-				barra.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-				barra.setPrefSize(570, 300);
-				barra.visibleProperty();
+				globo_msg.setFont(Font.font("Comic Sans Ms", FontWeight.LIGHT, 14));
 				
-				//space for users
-				AnchorPane vistaBorder = new AnchorPane();
-				ScrollPane scroolpane = new ScrollPane();
+				ScrollPane panelizq = new ScrollPane();
+				panelizq.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+				panelizq.setPrefSize(320, 350);
+				
+				FlowPane contenido = new FlowPane();
+				
+				for(int i = 0; i < 10; i++) {
+					Image foto = new Image("file:anime.jpg");
+					ImageView foto_user = new ImageView(foto);
+					foto_user.setFitWidth(60);
+					foto_user.setFitHeight(60);
+					foto_user.setPreserveRatio(true);
+					foto_user.setSmooth(true);
+					foto_user.setStyle("-fx-image-radius: 20px;");
+					
+					HBox mensajes = new HBox(20);
+					
+					Label lb = new Label("Hola como estas bienvenido al programa "+(i+1));
+					lb.setTextAlignment(TextAlignment.JUSTIFY);
+					lb.setWrapText(true);
+					lb.setMaxWidth(200);
+					lb.setStyle("-fx-background-color: rgb(179,231,244); -fx-background-radius: 8px;");
+					lb.setPadding(new Insets(6));
+					mensajes.getChildren().addAll(foto_user, lb);
+					mensajes.setPrefWidth(555);
+					mensajes.setPadding(new Insets(10, 0, 10, 10));
+					contenido.getChildren().add(mensajes);	
+				}
+				
+				ScrollPane panelder = new ScrollPane();
+				panelder.setContent(contenido);
+				panelder.setFitToWidth(true);
+				panelder.setHbarPolicy(ScrollBarPolicy.NEVER);
+				panelder.setPrefWidth(570);
+				panelder.setPannable(true);
+				
+				enviar.setOnAction(new EventHandler<ActionEvent>() {
+					
+					@Override
+					public void handle(ActionEvent event) {
 
-				VBox verticalIz = new VBox (100);
+						Image foto = new Image("file:anime.jpg");
+						ImageView foto_user = new ImageView(foto);
+						foto_user.setFitWidth(60);
+						foto_user.setFitHeight(60);
+						foto_user.setPreserveRatio(true);
+						foto_user.setSmooth(true);
+						foto_user.setStyle("-fx-image-radius: 20px;");
+						
+						HBox mensajes = new HBox(20);
+						
+						Label lb = new Label();
+						lb.setText(chat.getText());
+						lb.setTextAlignment(TextAlignment.LEFT);
+						lb.setWrapText(true);
+						lb.setMaxWidth(200);
+						lb.setStyle("-fx-background-color: rgb(179,231,244); -fx-background-radius: 8px;");
+						lb.setPadding(new Insets(6));
+						mensajes.getChildren().addAll(lb, foto_user);
+						mensajes.setPrefWidth(555);
+						mensajes.setAlignment(Pos.TOP_RIGHT);
+						mensajes.setPadding(new Insets(10, 10, 10, 10));
+						contenido.getChildren().add(mensajes);
+						panelder.vvalueProperty().bind(mensajes.heightProperty());
+						chat.clear();
+						
+						
+					}
+				});
 				
-				ScrollPane spaceuser = new ScrollPane();
-				Button btn1 = new Button("Boton1 jajsjlsansaldncns");
-				Button btn2 = new Button("Boton2");
-				Button btn3 = new Button("Boton3");
-				Button btn4 = new Button("Boton4");
-				Button btn5 = new Button("Boton5");
-				
-				
-				
-				  
+				HBox chatbox = new HBox(10);
+				chatbox.getChildren().addAll(chat, enviar);
+				chatbox.setAlignment(Pos.CENTER);
 
-				verticalIz.getChildren().addAll(btn1,btn2,btn3,btn4,btn5);
-				
-				spaceuser.setContent(verticalIz);
-				spaceuser.setPrefSize(300, 700);
-				spaceuser.visibleProperty();
-				spaceuser.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-				
-				
-				AnchorPane.setRightAnchor(spaceuser, 1280.10);
-				AnchorPane.setLeftAnchor(spaceuser, 10.10);
-				AnchorPane.setTopAnchor(spaceuser, 30.10);
-				AnchorPane.setBottomAnchor(spaceuser, 30.10);
-			
 				AnchorPane panel = new AnchorPane();
-				AnchorPane.setBottomAnchor(chatbox, 10d);
+				panel.getChildren().addAll(chatbox, panelizq, panelder);
+				panel.setStyle("-fx-focus-color: transparent;");
+				AnchorPane.setBottomAnchor(chatbox, 5d);
 				AnchorPane.setRightAnchor(chatbox, 5d);
-				AnchorPane.setTopAnchor(spacechat, 60d);
-				AnchorPane.setBottomAnchor(spacechat, 60d);
-				
-				AnchorPane.setRightAnchor(spacechat, 5d);
-				
-
-
-				
-				AnchorPane panel = new AnchorPane();
-				AnchorPane.setBottomAnchor(chatbox, 10d);
-				AnchorPane.setRightAnchor(chatbox, 5d);
-				AnchorPane.setTopAnchor(barra, 60d);
-				AnchorPane.setBottomAnchor(barra, 60d);
-				AnchorPane.setRightAnchor(barra, 5d);
-				
-				
-				vistaBorder.getChildren().addAll(spaceuser);
-				//
-				
-				panel.getChildren().addAll(chatbox, barra, vistaBorder);
+				AnchorPane.setLeftAnchor(panelizq, 0d);
+				AnchorPane.setTopAnchor(panelizq, 50d);
+				AnchorPane.setBottomAnchor(panelizq, 0d);
+				AnchorPane.setRightAnchor(panelder, 5d);
+				AnchorPane.setTopAnchor(panelder, 50d);
+				AnchorPane.setBottomAnchor(panelder, 45d);
 				
 				Stage escenario2 = new Stage();
 				Scene escena2 = new Scene(panel, 900, 600);
 				//escenario2.getIcons().add(new Image(""));
-				escenario2.setTitle("My QTT Chat ;)");
+				//escenario2.setTitle("");
+				escenario2.setResizable(false);
 				escenario2.setScene(escena2);
 				escenario2.show();
+
 			}
 		});
 		
@@ -172,7 +205,7 @@ public class Main extends Application {
 		
 		Scene escena = new Scene(raiz, 420, 230);
 		//escenario.getIcons().add(new Image(""));
-		escenario.setTitle("My QTT Chat ;)");
+		//escenario.setTitle("");
 		escenario.setScene(escena);
 		escenario.show();
 		
